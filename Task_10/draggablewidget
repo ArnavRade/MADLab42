@@ -1,0 +1,109 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(DraggableApp());
+}
+
+class DraggableApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Draggable & DragTarget Example',
+      debugShowCheckedModeBanner: false,
+      home: DragExampleScreen(),
+    );
+  }
+}
+
+class DragExampleScreen extends StatefulWidget {
+  @override
+  _DragExampleScreenState createState() => _DragExampleScreenState();
+}
+
+class _DragExampleScreenState extends State<DragExampleScreen> {
+  // To track if item was dropped
+  bool _isDropped = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Draggable Widget Example'),
+        centerTitle: true,
+      ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          // Step 1: Draggable widget
+          Center(
+            child: Draggable<String>(
+              data: 'Dragged',
+              child: Container(
+                height: 100,
+                width: 100,
+                color: Colors.blue,
+                alignment: Alignment.center,
+                child: Text(
+                  'Drag me',
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
+
+              // Step 2: Feedback (semi-transparent)
+              feedback: Opacity(
+                opacity: 0.7,
+                child: Container(
+                  height: 100,
+                  width: 100,
+                  color: Colors.blue,
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Dragging...',
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                ),
+              ),
+
+              // Child displayed when dragging
+              childWhenDragging: Container(
+                height: 100,
+                width: 100,
+                color: Colors.grey[300],
+                alignment: Alignment.center,
+                child: Text(
+                  'Dragging...',
+                  style: TextStyle(color: Colors.black54),
+                ),
+              ),
+            ),
+          ),
+
+          // Step 3: DragTarget widget
+          DragTarget<String>(
+            onAccept: (data) {
+              // Step 4: Change color/text on accept
+              setState(() {
+                _isDropped = true;
+              });
+            },
+            builder: (context, candidateData, rejectedData) {
+              return Container(
+                height: 120,
+                width: 200,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  color: _isDropped ? Colors.green : Colors.redAccent,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  _isDropped ? 'Item Dropped!' : 'Drop Here',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+}
