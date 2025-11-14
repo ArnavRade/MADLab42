@@ -1,0 +1,63 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(UserProfileApp());
+}
+
+class UserProfileApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'User Profile UI',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('User Profile'),
+          centerTitle: true,
+        ),
+        body: UserProfile(),
+      ),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class UserProfile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          // Step 2: CircleAvatar for profile picture
+          CircleAvatar(
+            radius: 60,
+            backgroundImage: NetworkImage(
+              'https://via.placeholder.com/150', // Placeholder image URL
+            ),
+          ),
+          SizedBox(height: 20),
+
+          // Step 3: User's name
+          Text(
+            'John Doe',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          SizedBox(height: 8),
+
+          // Step 4: User's email with smaller font & different color
+          Text(
+            'johndoe@example.com',
+            style: TextStyle(
+              fontSize: 16,
+              color: Colors.grey[600],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
