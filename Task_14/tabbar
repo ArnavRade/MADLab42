@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(TabBarApp());
+}
+
+class TabBarApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Simple TabBar Example',
+      debugShowCheckedModeBanner: false,
+      home: TabBarExample(),
+    );
+  }
+}
+
+class TabBarExample extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // Step 1: Wrap everything in DefaultTabController
+    return DefaultTabController(
+      length: 2, // Step 2: Two tabs
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('TabBar Example'),
+          centerTitle: true,
+          // Step 3: Add TabBar inside AppBar's bottom property
+          bottom: TabBar(
+            tabs: [
+              Tab(text: 'Chats', icon: Icon(Icons.chat)),
+              Tab(text: 'Status', icon: Icon(Icons.circle)),
+            ],
+          ),
+        ),
+        // Step 4: Add TabBarView with matching children
+        body: TabBarView(
+          children: [
+            Center(
+              child: Text(
+                'Chats Screen',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+            Center(
+              child: Text(
+                'Status Screen',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
