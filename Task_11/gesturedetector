@@ -1,0 +1,66 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(ImageGalleryApp());
+}
+
+class ImageGalleryApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Image Gallery with GestureDetector',
+      debugShowCheckedModeBanner: false,
+      home: ImageGalleryScreen(),
+    );
+  }
+}
+
+class ImageGalleryScreen extends StatelessWidget {
+  // Step 1: Placeholder image URLs
+  final List<String> imageUrls = [
+    'https://via.placeholder.com/150/FF0000/FFFFFF?text=Image+1',
+    'https://via.placeholder.com/150/00FF00/FFFFFF?text=Image+2',
+    'https://via.placeholder.com/150/0000FF/FFFFFF?text=Image+3',
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Image Gallery'),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(12.0),
+
+        // Step 1: GridView for image layout
+        child: GridView.count(
+          crossAxisCount: 3, // 3 images per row
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          children: List.generate(imageUrls.length, (index) {
+            return GestureDetector(
+              // Step 2: Wrap Image in GestureDetector
+              onTap: () {
+                // Step 3: Show SnackBar on tap
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Image ${index + 1} tapped'),
+                    duration: Duration(seconds: 1),
+                  ),
+                );
+
+                // Optional: Print in console too
+                print('Image ${index + 1} tapped');
+              },
+              child: Image.network(
+                imageUrls[index],
+                fit: BoxFit.cover,
+              ),
+            );
+          }),
+        ),
+      ),
+    );
+  }
+}
