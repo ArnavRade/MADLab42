@@ -1,0 +1,46 @@
+import 'package:flutter/material.dart';
+import 'dart:convert'; // Step 2: Import for json.decode()
+
+void main() {
+  runApp(JsonListApp());
+}
+
+class JsonListApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'JSON Data Example',
+      debugShowCheckedModeBanner: false,
+      home: JsonListScreen(),
+    );
+  }
+}
+
+class JsonListScreen extends StatelessWidget {
+  // Step 1: Define a JSON string
+  final String jsonString = '[{"name":"Apple"}, {"name":"Banana"}, {"name":"Mango"}, {"name":"Orange"}]';
+
+  @override
+  Widget build(BuildContext context) {
+    // Step 2: Decode JSON string to a list
+    final List<dynamic> fruits = json.decode(jsonString);
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Fruits List from JSON'),
+        centerTitle: true,
+      ),
+
+      // Step 3: Display list using ListView.builder
+      body: ListView.builder(
+        itemCount: fruits.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Icon(Icons.local_grocery_store),
+            title: Text(fruits[index]['name']),
+          );
+        },
+      ),
+    );
+  }
+}
