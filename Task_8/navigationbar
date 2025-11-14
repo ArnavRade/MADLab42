@@ -1,0 +1,71 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(BottomNavApp());
+}
+
+class BottomNavApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Bottom Navigation Example',
+      debugShowCheckedModeBanner: false,
+      home: BottomNavScreen(),
+    );
+  }
+}
+
+class BottomNavScreen extends StatefulWidget {
+  @override
+  _BottomNavScreenState createState() => _BottomNavScreenState();
+}
+
+class _BottomNavScreenState extends State<BottomNavScreen> {
+  // Step 2: Define current index
+  int _currentIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    // Step 6: Conditional content for each tab
+    final List<Widget> pages = [
+      Center(child: Text('🏠 Home Page', style: TextStyle(fontSize: 24))),
+      Center(child: Text('🔍 Search Page', style: TextStyle(fontSize: 24))),
+      Center(child: Text('⚙️ Settings Page', style: TextStyle(fontSize: 24))),
+    ];
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Bottom Navigation Bar'),
+        centerTitle: true,
+      ),
+
+      // Body changes based on selected tab
+      body: pages[_currentIndex],
+
+      // Step 3: Add BottomNavigationBar
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex, // Step 4
+        onTap: (index) {
+          // Step 5: Update index on tap
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            label: 'Settings',
+          ),
+        ],
+      ),
+    );
+  }
+}
