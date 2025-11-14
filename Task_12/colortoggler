@@ -1,0 +1,55 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(ColorTogglerApp());
+}
+
+class ColorTogglerApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Color Toggler',
+      debugShowCheckedModeBanner: false,
+      home: ColorTogglerScreen(),
+    );
+  }
+}
+
+class ColorTogglerScreen extends StatefulWidget {
+  @override
+  _ColorTogglerScreenState createState() => _ColorTogglerScreenState();
+}
+
+class _ColorTogglerScreenState extends State<ColorTogglerScreen> {
+  // Step 1: Initialize background color variable
+  Color _backgroundColor = Colors.white;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // Step 2: Set background color dynamically
+      backgroundColor: _backgroundColor,
+      appBar: AppBar(
+        title: Text('Simple Color Toggler'),
+        centerTitle: true,
+      ),
+      body: Center(
+        child: Text(
+          'Tap the button to toggle color!',
+          style: TextStyle(fontSize: 18, color: Colors.black87),
+        ),
+      ),
+      // Step 3: Add FloatingActionButton
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.color_lens),
+        onPressed: () {
+          // Step 4: Use setState to toggle color
+          setState(() {
+            _backgroundColor =
+                _backgroundColor == Colors.white ? Colors.blue : Colors.white;
+          });
+        },
+      ),
+    );
+  }
+}
