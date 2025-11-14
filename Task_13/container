@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+import 'dart:math';
+
+void main() {
+  runApp(AnimatedContainerApp());
+}
+
+class AnimatedContainerApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Animated Container Demo',
+      debugShowCheckedModeBanner: false,
+      home: AnimatedContainerScreen(),
+    );
+  }
+}
+
+class AnimatedContainerScreen extends StatefulWidget {
+  @override
+  _AnimatedContainerScreenState createState() =>
+      _AnimatedContainerScreenState();
+}
+
+class _AnimatedContainerScreenState extends State<AnimatedContainerScreen> {
+  // Step 1: Initialize width and height
+  double _width = 100;
+  double _height = 100;
+
+  // Optional: Random generator for fun
+  final Random _random = Random();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Animated Container Example'),
+        centerTitle: true,
+      ),
+      body: Center(
+        // Step 2: Use AnimatedContainer
+        child: AnimatedContainer(
+          width: _width,
+          height: _height,
+          duration: Duration(seconds: 1), // Animation duration
+          curve: Curves.easeInOut, // Smooth animation
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Center(
+            child: Text(
+              'Tap the button!',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ),
+      ),
+      // Step 3: FloatingActionButton
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.play_arrow),
+        onPressed: () {
+          // Step 4: Change the size using setState
+          setState(() {
+            _width = 100 + _random.nextInt(150).toDouble();
+            _height = 100 + _random.nextInt(150).toDouble();
+          });
+        },
+      ),
+    );
+  }
+}
